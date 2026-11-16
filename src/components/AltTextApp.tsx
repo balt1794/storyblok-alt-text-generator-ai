@@ -81,6 +81,7 @@ export default function AltTextApp() {
 	const [credits, setCredits] = useState<number | null>(null);
 	const [language, setLanguage] = useState('english');
 	const [keyInput, setKeyInput] = useState('');
+	const [editingKey, setEditingKey] = useState(false);
 	const [savingKey, setSavingKey] = useState(false);
 
 	const [items, setItems] = useState<Item[]>([]);
@@ -126,6 +127,7 @@ export default function AltTextApp() {
 			const s = await api<Settings>('/api/settings', { apiKey: keyInput, language });
 			setSettings(s);
 			setKeyInput('');
+			setEditingKey(false);
 			if (s.creditsLeft !== undefined && s.creditsLeft !== null) setCredits(s.creditsLeft);
 			setBanner({ text: 'API key saved.', kind: 'ok' });
 		} catch (err) {
@@ -404,10 +406,12 @@ export default function AltTextApp() {
 							<div className="atg__key-row">
 								<input
 									id="atg-key"
-									type="password"
+									type={hasKey && !editingKey ? 'text' : 'password'}
 									autoComplete="off"
-									value={keyInput}
+									value={hasKey && !editingKey ? settings?.keyHint ?? '' : keyInput}
 									placeholder="Paste your API key"
+									onFocus={() => setEditingKey(true)}
+									onBlur={() => { if (!keyInput) setEditingKey(false); }}
 									onChange={(e) => setKeyInput(e.target.value)}
 								/>
 								<button type="submit" className="atg__btn" disabled={savingKey || !keyInput.trim()}>Save key</button>
