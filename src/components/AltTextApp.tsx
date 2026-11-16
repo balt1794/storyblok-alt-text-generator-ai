@@ -363,7 +363,7 @@ export default function AltTextApp() {
 		if (!d) return { text: item.alt ? 'Has alt text.' : 'No alt text yet.', kind: 'muted' };
 		switch (d.status) {
 			case 'working': return { text: 'Writing…', kind: 'working' };
-			case 'generated': return { text: 'Generated. Review it, then save.', kind: 'ok' };
+			case 'generated': return { text: 'Generated.', kind: 'ok' };
 			case 'edited': return { text: 'Edited. Save to keep it.', kind: 'ok' };
 			case 'error': return { text: d.message || 'Could not generate.', kind: 'error' };
 			default: return { text: '', kind: 'muted' };
@@ -372,7 +372,10 @@ export default function AltTextApp() {
 
 	return (
 		<div className="atg">
-			<h1 className="atg__title">Alt Text Generator AI</h1>
+			<div className="atg__brand">
+				<img className="atg__logo" src="/logo.png" alt="" width={36} height={36} />
+				<h1 className="atg__title">Alt Text Generator AI</h1>
+			</div>
 			<p className="atg__intro">
 				Write alt text for the images in your space. Generate it for one image or in bulk.{' '}
 				<a href="https://alttextgeneratorai.com/pricing" target="_blank" rel="noopener noreferrer">Get credits</a>
