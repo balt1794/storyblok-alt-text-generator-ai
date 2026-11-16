@@ -312,18 +312,21 @@ export default function AltTextApp() {
 		setProgress({ done: 0, total: savable.length, label: 'Saving' });
 		for (let i = 0; i < savable.length; i += SAVE_CHUNK) {
 			const chunk = savable.slice(i, i + SAVE_CHUNK);
+			// Read the texts now: state is cleared as soon as the save comes back.
+			const texts: Record<number, string> = {};
+			chunk.forEach((id) => (texts[id] = draftsRef.current[id].text.trim()));
 			try {
 				const data = await api<{ saved: number[]; failed: { id: number; error: string }[] }>('/api/save', {
 					items: chunk.map((id) => ({
 						id,
-						alt: draftsRef.current[id].text,
+						alt: texts[id],
 						meta: itemsRef.current.find((it) => it.id === id)?.meta || {},
 					})),
 				});
 				savedCount += data.saved.length;
 				failedCount += data.failed.length;
 				setItems((list) =>
-					list.map((it) => (data.saved.includes(it.id) ? { ...it, alt: draftsRef.current[it.id].text.trim() } : it)),
+					list.map((it) => (data.saved.includes(it.id) ? { ...it, alt: texts[it.id] } : it)),
 				);
 				setDrafts((d) => {
 					const next = { ...d };

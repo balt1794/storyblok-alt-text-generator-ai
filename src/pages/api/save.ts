@@ -17,9 +17,11 @@ export default route(['POST'], async (auth, req) => {
 		const alt = typeof item?.alt === 'string' ? item.alt.trim() : '';
 		if (!Number.isInteger(id) || !alt) continue;
 		try {
+			// Storyblok's asset window reads meta_data.alt; the top-level alt is kept in step with it.
 			await auth.client.put(`spaces/${auth.spaceId}/assets/${id}`, {
+				alt,
 				meta_data: { ...(item.meta && typeof item.meta === 'object' ? item.meta : {}), alt },
-			});
+			} as never);
 			saved.push(id);
 		} catch (e) {
 			console.error('Could not save the alt text for asset', id, e);

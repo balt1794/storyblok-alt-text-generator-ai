@@ -41,7 +41,7 @@ export default route(['GET'], async (auth, req) => {
 	const perPage = Number(response.perPage) || 100;
 
 	const items = assets.filter(isImage).map((a) => {
-		const alt = (a.alt ?? (a.meta_data?.alt as string | undefined) ?? '') || '';
+		const alt = (a.alt || (a.meta_data?.alt as string | undefined) || '').trim();
 		const svg = isSvg(a);
 		return {
 			id: a.id,
