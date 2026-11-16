@@ -1,0 +1,29 @@
+{
+	"name": "storyblok-alt-text-generator-ai",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "eslint ."
+	},
+	"dependencies": {
+		"@storyblok/app-extension-auth": "^2.2.1",
+		"jsonwebtoken": "^9.0.2",
+		"next": "16.4.6",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"typescript": "5.8.3",
+		"storyblok-js-client": "^7.0.0"
+	},
+	"devDependencies": {
+		"@types/jsonwebtoken": "^9.0.9",
+		"@types/node": "22.14.0",
+		"@types/react": "18.2.21",
+		"@types/react-dom": "18.2.7",
+		"eslint": "^9.39.5",
+		"eslint-config-next": "16.4.6"
+	},
+	"description": "Alt Text Generator AI, a Storyblok space plugin that writes alt text for the assets in your space."
+}
